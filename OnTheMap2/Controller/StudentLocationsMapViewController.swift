@@ -19,9 +19,10 @@ class StudentLocationsMapViewController: UIViewController {
             //show activity indicator
             loading(activityIndicator: loadingIndicator, isLoading: true)
             mapview.removeAnnotations(mapview.annotations)
+            
             locationsRequest()
         }
-        // get user first name and last name
+        // get logged in user first name and last name
         UdacityClient.getUserData(key: StudentInformationModel.studentLocation.uniqueKey ?? "", completion: handleUserDataResponse(user:error:))
     }
     //clear shared instance's data
@@ -35,12 +36,14 @@ class StudentLocationsMapViewController: UIViewController {
         ParseClient.getStudentLocations(completion: handleStudentLocationsResponse(studentLocations:error:))
     }
     //MARK: API Responses Handling
+    //store user first name and last name if any
     func handleUserDataResponse(user: User?, error: Error?) {
         if let user = user {
             StudentInformationModel.studentLocation.firstName = user.firstName
             StudentInformationModel.studentLocation.lastName = user.lastName
         }
     }
+    // create a point annotations from locations posted by other students
     func handleStudentLocationsResponse(studentLocations: [StudentInformation], error: Error?) {
         if studentLocations.count > 0 {
             StudentInformationModel.locations = studentLocations

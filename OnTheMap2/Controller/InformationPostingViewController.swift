@@ -43,13 +43,16 @@ class InformationPostingViewController: UIViewController {
         }
     }
     //MARK: Responses Handling
+    // if geocoding succed, this function hides the form and show a mapview with a pin which represents the coordinates for the address inserted by the user. Otherwise show an alert
     func handleFindLocationResponse(coordinate: CLLocationCoordinate2D?, error: Error?) {
         DispatchQueue.main.async {
+            // hide activity indicator
             self.loading(activityIndicator: self.loadingIndicator, controls: [self.addressTextField, self.mediaURLTextField, self.findLocationButton], isLoading: false)
         }
         if let coordinate = coordinate {
             StudentInformationModel.studentLocation.latitude = coordinate.latitude
             StudentInformationModel.studentLocation.longitude = coordinate.longitude
+            // hide the form
             self.toggleVisibility(components: [self.imageView, self.mediaURLTextField, self.addressTextField, self.findLocationButton], isHidden: true)
             self.toggleVisibility(components: [self.finishButton, self.mapview], isHidden: false)
             self.annotation.title = self.addressTextField.text
@@ -61,19 +64,25 @@ class InformationPostingViewController: UIViewController {
             self.showAlert(message: error?.localizedDescription.uppercased())
         }
     }
+    // if the location was posted the view is dismissed. Otherwise show an alert
     func handlePostLocationResponse(studentInformation: StudentInformation?, error: Error?) {
         if let studentInformation = studentInformation {
             StudentInformationModel.studentLocation.objectId = studentInformation.objectId
             StudentInformationModel.studentLocation.createdAt = studentInformation.createdAt
-            self.dismiss(animated: true)
+            DispatchQueue.main.async {
+                self.dismiss(animated: true)
+            }
         } else {
             showAlert(message: error?.localizedDescription.uppercased())
         }
     }
+    // if the location was updated the view is dismissed. Otherwise show an alert
     func handleUpdateLocationResponse(studentInformation: StudentInformation?, error: Error?) {
         if let studentInformation = studentInformation {
             StudentInformationModel.studentLocation.updatedAt = studentInformation.updatedAt
-            self.dismiss(animated: true)
+            DispatchQueue.main.async {
+                self.dismiss(animated: true)
+            }
         } else {
             showAlert(message: error?.localizedDescription.uppercased())
         }
@@ -82,7 +91,9 @@ class InformationPostingViewController: UIViewController {
     @IBAction func cancelButtonPressed(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
+    // try to geocode the address string given by the user
     @IBAction func findLocationButtonPressed(_ sender: Any) {
+        // show activity indicator
         loading(activityIndicator: loadingIndicator, controls: [addressTextField, mediaURLTextField, findLocationButton], isLoading: true)
         if !mediaURLTextField.text!.isEmpty && !addressTextField.text!.isEmpty {
             ParseClient.findLocation(addressString: addressTextField.text!, completion: handleFindLocationResponse(coordinate:error:))
@@ -90,6 +101,8 @@ class InformationPostingViewController: UIViewController {
             showAlert(message: "YOU NEED TO FILL IN EACH TEXT FIELD")
         }
     }
+    // Post the user location if the action is .created
+    // Update the user location if the action is .update
     @IBAction func finishButtonPressed(_ sender: Any) {
         StudentInformationModel.studentLocation.mediaURL = mediaURLTextField.text
         StudentInformationModel.studentLocation.mapString = addressTextField.text

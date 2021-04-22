@@ -39,6 +39,7 @@ class UdacityClient {
     }
     
     //MARK: GETting public user data
+    // Get data about the logged in user
     class func getUserData(key: String, completion: @escaping (User?, Error?) -> Void) {
         //TODO: Implement this logic
         let task = URLSession.shared.dataTask(with: UdacityClient.Endpoints.getUserData(key: key).url) { data, response, error in

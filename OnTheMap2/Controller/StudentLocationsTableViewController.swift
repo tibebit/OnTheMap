@@ -29,6 +29,7 @@ class StudentLocationsTableViewController: UIViewController {
         ParseClient.getStudentLocations(completion: handleStudentLocationsResponse(studentLocations:error:))
     }
     //MARK: Responses Handling
+    // table view update its content with the most recent locations downloaded
     func handleStudentLocationsResponse(studentLocations: [StudentInformation], error: Error?) {
         if studentLocations.count > 0 {
             StudentInformationModel.locations = studentLocations
@@ -42,6 +43,7 @@ class StudentLocationsTableViewController: UIViewController {
             self.loading(activityIndicator: self.loadingIndicator, isLoading: false)
         }
     }
+    //store user first name and last name if any
     func handleUserDataResponse(user: User?, error: Error?) {
         if let user = user {
             StudentInformationModel.studentLocation.firstName = user.firstName
@@ -61,6 +63,7 @@ class StudentLocationsTableViewController: UIViewController {
             self.navigationController?.popToRootViewController(animated: true)
         }
     }
+    // Check if the user has already posted a location in order to know what kind of request perform(POST or PUT)
     @IBAction func addLocationButtonPressed(_ sender: Any) {
         let informationPostingVC = self.storyboard?.instantiateViewController(withIdentifier: "addLocationVC") as! InformationPostingViewController
         ParseClient.checkStudentLocation(uniqueKey: StudentInformationModel.studentLocation.uniqueKey!) { (studentLocation, error) in
