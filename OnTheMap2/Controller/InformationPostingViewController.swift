@@ -68,14 +68,18 @@ class InformationPostingViewController: UIViewController {
         if let studentInformation = studentInformation {
             StudentInformationModel.studentLocation.objectId = studentInformation.objectId
             StudentInformationModel.studentLocation.createdAt = studentInformation.createdAt
+            self.dismiss(animated: true)
+        } else {
+            showAlert(title: "Error", message: error?.localizedDescription.uppercased())
         }
-        self.dismiss(animated: true)
     }
     func handleUpdateLocationResponse(studentInformation: StudentInformation?, error: Error?) {
         if let studentInformation = studentInformation {
             StudentInformationModel.studentLocation.updatedAt = studentInformation.updatedAt
+            self.dismiss(animated: true)
+        } else {
+            showAlert(title: "Error", message: error?.localizedDescription.uppercased())
         }
-        self.dismiss(animated: true)
     }
     //MARK: Actions
     @IBAction func cancelButtonPressed(_ sender: Any) {
