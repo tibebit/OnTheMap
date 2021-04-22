@@ -34,7 +34,7 @@ class StudentLocationsTableViewController: UIViewController {
                 self.tableview.reloadData()
             }
         } else {
-            showAlert(title: "Error", message: error?.localizedDescription.uppercased())
+            showAlert(message: error?.localizedDescription.uppercased())
         }
         DispatchQueue.main.async {
             self.loading(activityIndicator: self.loadingIndicator, controls: nil, isLoading: false)

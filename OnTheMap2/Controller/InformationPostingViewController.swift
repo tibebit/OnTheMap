@@ -58,7 +58,7 @@ class InformationPostingViewController: UIViewController {
             //set the region of the map to the the location where the pin points
             self.mapview.region = MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
         } else {
-            self.showAlert(title: "Error", message: error?.localizedDescription.uppercased())
+            self.showAlert(message: error?.localizedDescription.uppercased())
         }
     }
     func handlePostLocationResponse(studentInformation: StudentInformation?, error: Error?) {
@@ -67,7 +67,7 @@ class InformationPostingViewController: UIViewController {
             StudentInformationModel.studentLocation.createdAt = studentInformation.createdAt
             self.dismiss(animated: true)
         } else {
-            showAlert(title: "Error", message: error?.localizedDescription.uppercased())
+            showAlert(message: error?.localizedDescription.uppercased())
         }
     }
     func handleUpdateLocationResponse(studentInformation: StudentInformation?, error: Error?) {
@@ -75,7 +75,7 @@ class InformationPostingViewController: UIViewController {
             StudentInformationModel.studentLocation.updatedAt = studentInformation.updatedAt
             self.dismiss(animated: true)
         } else {
-            showAlert(title: "Error", message: error?.localizedDescription.uppercased())
+            showAlert(message: error?.localizedDescription.uppercased())
         }
     }
     //MARK: Actions
@@ -87,7 +87,7 @@ class InformationPostingViewController: UIViewController {
         if !mediaURLTextField.text!.isEmpty && !addressTextField.text!.isEmpty {
             ParseClient.findLocation(addressString: addressTextField.text!, completion: handleFindLocationResponse(coordinate:error:))
         } else {
-            showAlert(title: "Error", message: "YOU NEED TO FILL IN EACH TEXT FIELD")
+            showAlert(message: "YOU NEED TO FILL IN EACH TEXT FIELD")
         }
     }
     @IBAction func finishButtonPressed(_ sender: Any) {
