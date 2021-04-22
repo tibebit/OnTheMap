@@ -24,7 +24,6 @@ class UdacityClient {
         var url: URL {
             return URL(string: stringValue)!
         }
-        // Review this step
         var stringValue: String {
             switch self {
             case .getSessionId:
@@ -63,7 +62,6 @@ class UdacityClient {
                 let user = try decoder.decode(User.self, from: data)
                 completion(user, nil)
             } catch {
-                //to review this code
                 do {
                     let errorResponse = try decoder.decode(UdacityResponse.self, from: data)
                     DispatchQueue.main.async {
@@ -79,6 +77,7 @@ class UdacityClient {
         task.resume()
     }
     //MARK: POSTing a session
+    // if the request succed the user's Udacity accound id is passed to the completion handler
     class func loginRequest(username: String, password: String, completion: @escaping (String? ,Error?)->Void) {
         let loginRequest = LoginRequest(udacity: Udacity(username: username, password: password))
         var request = URLRequest(url: UdacityClient.Endpoints.getSessionId.url)
@@ -100,7 +99,6 @@ class UdacityClient {
                 DispatchQueue.main.async {
                     completion(nil, error)
                 }
-                //Handle error
                 return
             }
             guard var data = data else {

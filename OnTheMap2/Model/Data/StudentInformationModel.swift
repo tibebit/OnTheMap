@@ -8,6 +8,8 @@
 import Foundation
 
 class StudentInformationModel {
+    // locations loaded from the Parse API after a GET request
     static var locations = [StudentInformation]()
+    // the information about the student that is using the app
     static var studentLocation = StudentInformation()
 }

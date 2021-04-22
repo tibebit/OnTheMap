@@ -18,7 +18,6 @@ class ParseClient {
         var url: URL {
             return URL(string: stringValue)!
         }
-        // Review this step
         var stringValue: String {
             switch self {
             case .getStudentLocations(let query):
@@ -121,7 +120,7 @@ class ParseClient {
             completion(response.results, nil)
         }
     }
-    //Check if a location with the given uniqueKey already exists
+    //Check if the user has already posted a location
     class func checkStudentLocation(uniqueKey: String, completion: @escaping (StudentInformation?, Error?)->Void) {
         var components = URLComponents()
         components.query = "?uniqueKey=\(uniqueKey)"
@@ -134,6 +133,7 @@ class ParseClient {
         }
     }
     //MARK: POSTing Student Locations
+    // Post a location for the user
     class func postStudentLocation(studentInformation: StudentInformation, completion: @escaping (StudentInformation?, Error?)->Void) {
         taskForPRequest(url: ParseClient.Endpoints.postStudentLocation.url, body: studentInformation, httpMethod: "POST", response: StudentInformation.self) { (studentInformation, error) in
             guard let studentInformation = studentInformation else{
@@ -144,6 +144,7 @@ class ParseClient {
         }
     }
     //MARK: PUTting Student Locations
+    // update the existing location
     class func updateStudentLocation(studentInformation: StudentInformation, completion: @escaping (StudentInformation?, Error?)->Void) {
         taskForPRequest(url: ParseClient.Endpoints.updateLocation(objectId: studentInformation.objectId!).url, body: studentInformation, httpMethod: "PUT", response: StudentInformation.self) { (studentInformation, error) in
                 guard let studentInformation = studentInformation else {
