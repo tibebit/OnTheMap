@@ -14,15 +14,17 @@ class StudentLocationsTableViewController: UIViewController {
     //MARK: Lifecycle
     override func viewDidLoad() {
         if StudentInformationModel.locations.isEmpty {
-            loading(activityIndicator: loadingIndicator, controls: nil, isLoading: true)
+            loading(activityIndicator: loadingIndicator, isLoading: true)
             locationsRequest()
         }
     }
+    //clear shared instance's data
     deinit {
         StudentInformationModel.locations.removeAll()
         StudentInformationModel.studentLocation = StudentInformation()
     }
     //MARK: API Requests
+    // download the 100 most recent locations posted by students
     func locationsRequest() {
         ParseClient.getStudentLocations(completion: handleStudentLocationsResponse(studentLocations:error:))
     }
@@ -37,7 +39,7 @@ class StudentLocationsTableViewController: UIViewController {
             showAlert(message: error?.localizedDescription.uppercased())
         }
         DispatchQueue.main.async {
-            self.loading(activityIndicator: self.loadingIndicator, controls: nil, isLoading: false)
+            self.loading(activityIndicator: self.loadingIndicator, isLoading: false)
         }
     }
     func handleUserDataResponse(user: User?, error: Error?) {
@@ -49,7 +51,7 @@ class StudentLocationsTableViewController: UIViewController {
     
     //MARK: Actions
     @IBAction func refreshButtonPressed(_ sender: Any) {
-        loading(activityIndicator: loadingIndicator, controls: nil, isLoading: true)
+        loading(activityIndicator: loadingIndicator, isLoading: true)
         StudentInformationModel.locations.removeAll()
         tableview.reloadData()
         locationsRequest()
@@ -94,6 +96,7 @@ extension StudentLocationsTableViewController: UITableViewDelegate, UITableViewD
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let url = URL(string: StudentInformationModel.locations[indexPath.row].mediaURL ?? "")!
+        tableview.deselectRow(at: [indexPath.row], animated: true)
         open(urlToOpen: url)
     }
 }

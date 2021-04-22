@@ -29,6 +29,7 @@ class LoginViewController: UIViewController {
         if !emailTextField.text!.isEmpty && !passwordTextField.text!.isEmpty {
             //show activity indicator
             loading(activityIndicator: loggingIndicator, controls: [emailTextField, passwordTextField, loginButton, signupButton], isLoading: true)
+            // attempt to login
             UdacityClient.loginRequest(username: emailTextField.text!, password: passwordTextField.text!, completion: handleLoginResponse(key:error:))
         } else {
             showAlert(message: "YOU NEED TO FILL IN EACH TEXT FIELD")
@@ -38,6 +39,7 @@ class LoginViewController: UIViewController {
         open(urlToOpen: UdacityClient.Endpoints.signupPage.url)
     }
     //MARK: API Responses Handling
+    // If the request succed 
     func handleLoginResponse(key: String?, error: Error?) {
         //hide activity indicator
         loading(activityIndicator: loggingIndicator, controls: [emailTextField, passwordTextField, loginButton, signupButton], isLoading: false)

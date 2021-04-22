@@ -9,6 +9,7 @@ import UIKit
 
 extension UIViewController {
     //MARK: UI Functions
+    //Customizable alert with default parameters
     func showAlert(title: String? = "Error" ,message: String? = "Something went wrong", _ actions: [UIAlertAction]? = nil) {
         let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
         if let actions = actions {
@@ -27,12 +28,14 @@ extension UIViewController {
     func open(urlToOpen url: URL) {
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
-    func loading(activityIndicator: UIActivityIndicatorView ,controls: [UIControl]? ,isLoading: Bool) {
+    // show/hide the activity indicator vie
+    func loading(activityIndicator: UIActivityIndicatorView ,controls: [UIControl] = [] ,isLoading: Bool) {
         isLoading ? activityIndicator.startAnimating() : activityIndicator.stopAnimating()
-        if let controls = controls {
+        if !controls.isEmpty {
             setUIState(controls: controls, enabled: !isLoading)
         }
     }
+    //disable/enable all the controls passed
     func setUIState(controls: [UIControl], enabled: Bool) {
         for control in controls {
             control.isEnabled = enabled

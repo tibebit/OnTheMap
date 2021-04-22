@@ -16,17 +16,21 @@ class StudentLocationsMapViewController: UIViewController {
     //MARK: Lifecycle
     override func viewDidLoad() {
         if StudentInformationModel.locations.isEmpty {
-            loading(activityIndicator: loadingIndicator, controls: nil, isLoading: true)
+            //show activity indicator
+            loading(activityIndicator: loadingIndicator, isLoading: true)
             mapview.removeAnnotations(mapview.annotations)
             locationsRequest()
         }
+        // get user first name and last name
         UdacityClient.getUserData(key: StudentInformationModel.studentLocation.uniqueKey ?? "", completion: handleUserDataResponse(user:error:))
     }
+    //clear shared instance's data
     deinit {
         StudentInformationModel.locations.removeAll()
         StudentInformationModel.studentLocation = StudentInformation()
     }
     //MARK: API Requests
+    // download the 100 most recent locations posted by students
     func locationsRequest() {
         ParseClient.getStudentLocations(completion: handleStudentLocationsResponse(studentLocations:error:))
     }
@@ -52,7 +56,8 @@ class StudentLocationsMapViewController: UIViewController {
             showAlert(message: error?.localizedDescription.uppercased())
         }
         DispatchQueue.main.async {
-            self.loading(activityIndicator: self.loadingIndicator, controls: nil, isLoading: false)
+            //hide activity indicator
+            self.loading(activityIndicator: self.loadingIndicator, isLoading: false)
         }
     }
     //MARK: Annotation
@@ -64,7 +69,8 @@ class StudentLocationsMapViewController: UIViewController {
     }
     //MARK: Actions
     @IBAction func refreshButtonPressed(_ sender: Any) {
-        loading(activityIndicator: loadingIndicator, controls: nil, isLoading: true)
+        //show activity indicator
+        loading(activityIndicator: loadingIndicator, isLoading: true)
         StudentInformationModel.locations.removeAll()
         mapview.removeAnnotations(mapview.annotations)
         locationsRequest()
