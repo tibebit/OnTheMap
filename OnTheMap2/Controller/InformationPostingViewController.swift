@@ -36,9 +36,6 @@ class InformationPostingViewController: UIViewController {
         mediaURLTextField.delegate = self
         addressTextField.delegate = self
     }
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-    }
     //MARK: UI Functions
     func toggleVisibility(components: [UIView], isHidden: Bool) {
         for component in components {

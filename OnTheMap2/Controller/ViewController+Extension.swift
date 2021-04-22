@@ -18,7 +18,9 @@ extension UIViewController {
         } else {
             alertVC.addAction(UIAlertAction(title: "OK", style: .default))
         }
-        self.present(alertVC, animated: true)
+        DispatchQueue.main.async {
+            self.present(alertVC, animated: true)
+        }
     }
     
     //MARK: Utility
