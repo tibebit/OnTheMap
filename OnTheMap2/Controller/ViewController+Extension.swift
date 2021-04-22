@@ -28,11 +28,8 @@ extension UIViewController {
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
     func loading(activityIndicator: UIActivityIndicatorView ,controls: [UIControl]? ,isLoading: Bool) {
-        if isLoading {
-            activityIndicator.startAnimating()
-        } else {
-            activityIndicator.stopAnimating()
-        }
+        
+        isLoading ? activityIndicator.startAnimating() : activityIndicator.stopAnimating()
         if let controls = controls {
             setUIState(controls: controls, enabled: !isLoading)
         }
