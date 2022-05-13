@@ -1,22 +1,37 @@
 # OnTheMap
-The On The Map app allows users to share their location and a URL with their fellow students. 
-To visualize this data, On The Map uses a map with pins for location and pin annotations for student names and URLs.
-## Structure
-The app has three view controller scenes:
-* **Login View:** Allows the user to log in using their Udacity credentials
-* **Map and Table Tabbed View:** Allows users to see the locations of other students in two formats
-* **Information Posting View:** Allows the users specify their own locations and links
-### Login View
-The login view accepts the email address and password that students use to login to the Udacity site.
-### Map and Table Tabbed View
-This view displays the last 100 locations posted by students with the following formats:
-* A Map: if a pin is tapped, it displays the pin annotation popup, with the student’s name (pulled from their Udacity profile) and the link associated with the student’s pin.
-* A Table
+The application allows you to browse a map and view map pins posted by other Udacity's students. You can post your map pins along with a URL to share things you're interested in.
+## Structure Overview
+* **Login View:** prompts you to use your Udacity's credentials to log in
+* **Map View:** displays all the map pins posted so far
+* **Information Posting View:** allows you to share a map pin along with a URL
+## Views Details
 ### Information Posting View
-The Information Posting View allows users to input their own data into two textfields:
-* An address string which gets geocoded by the system
+The information posting process requires the following information:
+* An address
 * A URL
+## Requirements
+To build and run the app, you'll need:
+* iOS 13
+* Xcode 11
+## License
+MIT License
 
-When the user clicks on the “Find Location” button, the app will forward geocode the string.
-If the forward geocode succeeds then text fields will be hidden, and a map showing the entered location will be displayed. 
-Tapping the “Finish” button will post the location and link to the server.
+Copyright (c) 2022 Fabio Tiberio
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
